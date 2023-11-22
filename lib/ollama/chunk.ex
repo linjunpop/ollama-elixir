@@ -1,9 +1,9 @@
 defmodule Ollama.Chunk do
-  # {
-  #   "model": "llama2",
-  #   "created_at": "2023-08-04T08:52:19.385406455-07:00",
-  #   "response": "The",
-  #   "done": false
-  # }
+  @type t ::
+          %__MODULE__{
+            model: String.t(),
+            created_at: String.t(),
+            response: String.t()
+          }
   defstruct [:model, :created_at, :response]
 end

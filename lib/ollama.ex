@@ -8,8 +8,14 @@ defmodule Ollama do
   alias Ollama.Meta
   alias Ollama.Error
 
+  @type t ::
+          %__MODULE__{
+            host: String.t(),
+            finch: atom()
+          }
   defstruct [:host, :finch]
 
+  @spec new(String.t(), atom()) :: Ollama.t()
   def new(host, finch) do
     %__MODULE__{
       host: host,
@@ -17,6 +23,14 @@ defmodule Ollama do
     }
   end
 
+  @spec generate(
+          Ollama.t(),
+          map(),
+          keyword(),
+          ({:chunk, Chunk.t()} | :done | {:error, Error.t()} -> any)
+        ) ::
+          {:error, Finch.Error.t()}
+          | {:ok, Result.t() | Error.t()}
   def generate(
         %__MODULE__{host: host, finch: finch} = _ollama,
         params \\ %{},
